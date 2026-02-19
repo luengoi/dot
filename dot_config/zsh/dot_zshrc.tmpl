@@ -1,0 +1,51 @@
+#   .zshrc
+#   Zsh configuration (sourced on interactive shells)
+
+#: Customization
+
+plugins=( {{ .zsh.plugins | join " " }} )
+prompt_config={{ .zsh.prompt }}
+
+#: Misc
+
+setopt MAGICEQUALSUBST
+setopt NOTIFY
+setopt NUMERICGLOBSORT
+
+#: Autocompletion
+
+fpath=( "$fpath[@]" "$ZSH_CUSTOM/completion/" )
+
+autoload -Uz compaudit compinit zrecompile
+compinit
+
+#: Plugins
+
+for plugin ( $plugins ); do
+  if [[ -f "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh" ]]; then
+    source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
+  elif [[ -f "$ZSH_CUSTOM/plugins/$plugin/$plugin.zsh" ]]; then
+    source "$ZSH_CUSTOM/plugins/$plugin/$plugin.zsh"
+  fi
+done
+unset plugin plugins
+
+#: Config
+
+for config_file ( "$ZSH_CONFIG"/*.zsh(N) ); do
+  source "$config_file"
+done
+unset config_file
+
+for private_config ( "$ZSH_CUSTOM"/private/*.zsh(N) ); do
+  source "$private_config"
+done
+unset private_config
+
+#: Prompt
+
+if (( $+commands[oh-my-posh])) && [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
+  eval "$(oh-my-posh init zsh --config "$ZSH_CUSTOM/prompt/$prompt_config.omp.json")"
+fi
+
+# vim: ft=zsh ts=2 sw=2 sts=2 et fenc=utf-8

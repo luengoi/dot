@@ -1,0 +1,68 @@
+#   kitty.conf
+#   Kitty terminal configuration file
+
+#: -- Theme --
+
+#: Terminal colors
+background            #1e222a
+foreground            #bbc3d4
+selection_foreground  #1e222a
+selection_background  #bbc3d4
+cursor                #c0c8d8
+cursor_text_color     #bbc3d4
+
+#: The 16 basic colors
+
+#: black
+color0   #191d24
+color8   #3b4252
+
+#: red
+color1   #bf616a
+color9   #c5727a
+
+#: green
+color2   #a3be8c
+color10  #b1c89d
+
+#: yellow
+color3   #ebcb8b
+color11  #efd49f
+
+#: blue
+color4   #5e81ac
+color12  #88c0d0
+
+#: magenta
+color5   #b48ead
+color13  #be9db8
+
+#: cyan
+color6   #8fbcbb
+color14  #9fc6c5
+
+#: white
+color7   #c0c8d8
+color15  #d8dee9
+
+#: -- Fonts --
+
+font_size {{ .kitty.font.size }}
+font_family MesloLGS NF
+bold_font MesloLGS NF Bold
+italic_font MesloLGS NF Italic
+bold_italic_font MesloLGS NF Bold Italic
+
+#: -- Configuration --
+
+enable_audio_bell no
+url_style curly
+cursor_shape beam
+cursor_beam_thickness 1.8
+sync_to_monitor yes
+window_padding_width 0
+hide_window_decorations "titlebar-only"
+shell {{ .kitty.shell }}
+map ctrl+shift+f5 load_config_file
+
+# vim: ft=conf ts=2 sw=2 sts=2 et fenc=utf-8

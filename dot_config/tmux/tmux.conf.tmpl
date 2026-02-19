@@ -1,0 +1,41 @@
+unbind C-b
+set -g prefix C-a                     # Set prefix key to Ctrl + a (TODO: different prefix for nested sessions)
+set -g base-index 1                   # Start indexing windows from 1 (keyboard friendly)
+set -g renumber-windows on            # Renumber windows when any window is closed
+set -g history-limit 5000             # History line limit
+set -g set-clipboard on               # Use system clipboard
+set -g default-terminal "${TERM}"     # Set default terminal
+
+bind r source-file ~/.config/tmux/tmux.conf \; display "[CFG] Configuration file reloaded!"
+bind | split-window -h
+bind - split-window -v
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+bind x kill-pane
+
+setw -g mode-keys vi
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi 'C-v' send -X rectangle-toggle
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel 'pbcopy'
+
+set -g status-position bottom
+set -g status-style 'bg=#191d24 fg=colour255'
+set -g status-left '  '
+set -g status-right ''
+set -g status-right-length 50
+set -g status-left-length 20
+setw -g mode-keys vi
+
+setw -g window-status-style 'bg=#191d24 fg=colour255'
+setw -g window-status-current-format '#I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#{?window_zoomed_flag, , } '
+setw -g window-status-format '#I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#{?window_zoomed_flag, ,} '
+
+set-option -g history-limit 5000
+
+# vim: ft=tmux sw=2 ts=2 sts=2 et fenc=utf-8

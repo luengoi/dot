@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+#   run_onchange_install-packages.zsh
+#   Script to install the required packages on each system
+
+printf "\n[+] Running run_onchange_install-packages.zsh script\n"
+
+{{ if lookPath "brew" }}
+{{  if .packages.brew.taps }}
+printf "\n[*] Installing taps...\n\n"
+for tap ( {{ .packages.brew.taps | join " " }} ); do
+  brew tap $tap
+done
+{{  end }}
+{{  if .packages.brew.formulae }}
+printf "\n[*] Installing formulae...\n\n"
+brew install --formula {{ .packages.brew.formulae | join " " }}
+{{  end }}
+{{  if .packages.brew.casks }}
+printf "\n[*] Installing casks...\n\n"
+brew install --cask {{ .packages.brew.casks | join " " }}
+{{  end }}
+{{  if .packages.brew.services }}
+printf "\n[*] Starting services...\n\n"
+for service ( {{ .packages.brew.services | join " " }} ); do
+  brew services start $service
+done
+{{  end }}
+{{ end }}
+
+{{ if lookPath "nix-env" }}
+{{  if .packages.nix.nixpkgs }}
+printf "\n[*] Installing nix packages...\n\n"
+nix_packages=( {{ .packages.nix.nixpkgs | join " " }} )
+nix-env -iA nixpkgs.${^nix_packages}
+{{  end }}
+{{ end }}
+
+printf "\n[+] Script complete\n"
+
+# vim: ft=zsh ts=2 sw=2 sts=2 et fenc=utf-8

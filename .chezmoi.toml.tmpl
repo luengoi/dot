@@ -1,0 +1,114 @@
+#   .chezmoi.toml
+#   Chezmoi configuration variables
+
+[edit]
+    command = "nvim"
+
+[data.fonts]
+    nerdfonts = {{ if .chezmoi.hostname | contains "starship" }} true {{ else }} false {{ end }}
+    dir = {{ if eq .chezmoi.os "darwin" }} "Library/Fonts" {{ else }} ".local/share/fonts" {{ end }}
+
+[data.macos]
+    {{ if eq .chezmoi.os "darwin" }}
+    # useful doc: https://macos-defaults.com
+    defaults = """
+    [
+        {
+            "domain": "com.apple.dock",
+            "key": "orientation",
+            "type": "string",
+            "value": "bottom"
+        },
+        {
+            "domain": "com.apple.dock",
+            "key": "tilesize",
+            "type": "int",
+            "value": "16"
+        },
+        {
+            "domain": "com.apple.dock",
+            "key": "autohide",
+            "type": "bool",
+            "value": "true"
+        },
+        {
+            "domain": "com.apple.dock",
+            "key": "autohide-delay",
+            "type": "float",
+            "value": "2"
+        },
+        {
+            "domain": "com.apple.spaces",
+            "key": "spans-displays",
+            "type": "bool",
+            "value": "true"
+        },
+        {
+            "domain": ".GlobalPreferences",
+            "key": "AppleMenuBarVisibleInFullscreen",
+            "type": "bool",
+            "value": "false"
+        },
+        {
+            "domain": ".GlobalPreferences",
+            "key": "_HIHideMenuBar",
+            "type": "bool",
+            "value": "true"
+        }
+    ]
+    """
+    {{ end }}
+
+[data.packages.brew]
+    {{ if eq .chezmoi.os "darwin" }}
+    taps = ["FelixKratz/formulae",          # sketchybar
+            ]
+    formulae = ["xcodes",                   # command-line xcode version manager
+                "sketchybar",               # highly customizable macOS status bar replacement
+                "mint",                     # package manager for executable swift packages
+                ]
+    casks = ["kitty",                       # fast, feature-rich, GPU based terminal emulator
+             "karabiner-elements",          # powerful and stable keyboard customizer
+             "nikitabobko/tap/aerospace",   # i3-like tiling window manager for macOS
+             "sf-symbols",                  # tool that provides consistent, highly configurable symbols for apps
+             ]
+    services = ["sketchybar"                # run sketchybar on startup
+                ]
+    {{ end }}
+
+[data.packages.nix]
+    nixpkgs = ["aria2",         # lightweight multi-protocol command-line download utility
+               "bat",           # cat(1) clone with syntax highlighting and Git integration
+               "coreutils",     # GNU core utilities
+               "fzf",           # command-line fuzzy finder
+               "fd",            # simple, fast and user-friendly alternative to find
+               "gnupg",         # GNU Privacy Guard (OpenPGP implementation)
+               "lsd",           # the next gen ls command
+               "mise",          # front-end for your dev env
+               "neovim",        # powerful command-line text editor
+               "oh-my-posh",    # a prompt theme engine for any shell
+               "opencode",      # open source coding agent
+               "ripgrep",       # very fast grep replacement
+               "rustup",        # rust toolchain installer
+               "sbarlua",       # lua API for sketchybar
+               "tmux",          # terminal multiplexer
+               "tree-sitter",   # parser generator tool and incremental parsing library
+               "zsh",           # extended version of the Bourne Shell (sh)
+               "_7zz",          # command-line archiver utility
+               ]
+
+[data.kitty]
+    shell = "zsh --login"
+
+[data.kitty.font]
+    size = 12
+
+[data.zsh]
+    plugins = ["zsh-autosuggestions",
+               "fzf",
+               "rust",
+               "mise",
+               ]
+    prompt = "material"
+
+# vim: ft=toml ts=4 sw=4 sts=4 et fenc=utf-8

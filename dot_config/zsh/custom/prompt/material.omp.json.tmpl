@@ -1,0 +1,61 @@
+chezmoi:template:left-delimiter=[[ right-delimiter=]]
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#bf616a",
+          "style": "plain",
+          "template": "{{ if .SSHSession }}(ssh) {{ end }}",
+          "type": "session"
+        },
+        {
+          "type": "nix-shell",
+          "style": "plain",
+          "foreground": "magenta",
+          "background": "transparent",
+          "template": "(nix-{{ .Type }}) "
+        },
+        {
+          "foreground": "#ffffff",
+          "style": "plain",
+          "template": "{{ if ne .Code 0 }}<#e91e63>\u276f</><#e91e63>\u276f</>{{ else }}<#c591e8>\u276f</><#69ff94>\u276f</>{{ end }}",
+          "type": "status",
+          "properties": {
+            "always_enabled": true
+          }
+        },
+        {
+          "foreground": "#56b6c2",
+          "properties": {
+            "style": "folder"
+          },
+          "style": "plain",
+          "template": " {{ .Path }}",
+          "type": "path"
+        },
+        {
+          "foreground": "#808080",
+          "properties": {
+            "branch_icon": "",
+            "fetch_status": true
+          },
+          "style": "plain",
+          "template": " {{ $staged := add .Staging.Modified .Staging.Added .Staging.Deleted }}{{ $working := add .Working.Modified .Working.Added .Working.Deleted }}<#5faae8>git:(</>{{ .HEAD }}{{ if gt .Behind 0 }} ⇣{{ .Behind }}{{ end }}{{ if gt .Ahead 0 }}{{ if eq .Behind 0 }} {{ end }}⇡{{ .Ahead }}{{ end }}{{ if gt $staged 0 }} +{{ $staged }}{{ end }}{{ if gt $working 0 }} !{{ $working }}{{ end }}{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}{{ if gt .StashCount 0 }} *{{ .StashCount }}{{ end }}<#5faae8>)</>",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "#ffffff",
+    "template": "<#c591e8>\u276f</><#69ff94>\u276f</> "
+  },
+  "final_space": true,
+  "version": 3
+}

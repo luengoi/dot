@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+#   run_onchange_install-packages.zsh
+#   Script to install the required packages on each system
+
+{{ if and .macos.defaults (lookPath "jq") }}
+function get_defaults() {
+  cat <<EOF
+{{ .macos.defaults }}
+EOF
+}
+
+function get_field() {
+  local field="$1"
+  local default="$2"
+
+  jq -r ".$field" <<<$default
+}
+
+echo "[*] Configuring macOS defaults..."
+
+for default in $(get_defaults | jq -c '.[]'); do
+  local domain="$(get_field domain "$default")"
+  local key="$(get_field key "$default")"
+  local key_type="$(get_field type "$default")"
+  local value="$(get_field value "$default")"
+
+  defaults write "$domain" "$key" "-$key_type" "$value"
+done
+{{ end }}
+
+# vim: ft=zsh ts=2 sw=2 sts=2 et fenc=utf-8

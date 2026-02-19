@@ -1,0 +1,38 @@
+#   .chezmoiexternal.toml.tmpl
+#   Chezmoi external resources (downloaded on apply)
+
+[".config/zsh/custom/plugins/zsh-autosuggestions"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/heads/master.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+{{ if .fonts.nerdfonts }}
+["{{ .fonts.dir }}/SymbolsNerdFont-Regular.ttf"]
+    type = "file"
+    url = "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf"
+    refreshPeriod = "168h"
+
+["{{ .fonts.dir }}/MesloLGSNerdFont-Regular.ttf"]
+    type = "file"
+    url = "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf"
+    refreshPeriod = "168h"
+
+["{{ .fonts.dir }}/MesloLGSNerdFont-Bold.ttf"]
+    type = "file"
+    url = "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Meslo/S/Bold/MesloLGSNerdFont-Bold.ttf"
+    refreshPeriod = "168h"
+
+["{{ .fonts.dir }}/MesloLGSNerdFont-Italic.ttf"]
+    type = "file"
+    url = "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Meslo/S/Italic/MesloLGSNerdFont-Italic.ttf"
+    refreshPeriod = "168h"
+
+["{{ .fonts.dir }}/MesloLGSNerdFont-BoldItalic.ttf"]
+    type = "file"
+    url = "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Meslo/S/Bold-Italic/MesloLGSNerdFont-BoldItalic.ttf"
+    refreshPeriod = "168h"
+{{ end }}
+
+# vim: ft=toml ts=4 sts=4 sw=4 et fenc=utf-8
